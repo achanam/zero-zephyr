@@ -1,0 +1,38 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# opennext / cloudflare
+.open-next/
+.wrangler/
+cloudflare-env.d.ts
+
+# local secrets, never commit these
+.dev.vars
+.dev.vars.*
+.env
+.env.local
+.env.*.local
+
+# build output
+build/
+dist/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# editor / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

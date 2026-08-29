@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "zero-zephyr",
+  "account_id": "100d91685d98dccb5499b178294e8068",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-07-29",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "SUPABASE_URL": "https://jrszoagutvnvpjlgkhyr.supabase.co"
+  },
+  "kv_namespaces": [
+    { "binding": "RATE_LIMIT_KV", "id": "dcbe1a1a82114060b1e02ddebf2bf1ad" }
+  ],
+  "r2_buckets": [
+    { "binding": "BUCKET", "bucket_name": "secure-send-files" }
+  ]
+}

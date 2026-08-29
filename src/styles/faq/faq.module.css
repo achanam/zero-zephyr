@@ -1,0 +1,421 @@
+:root {
+  --ink: #0e1118;
+  --ink-soft: #141820;
+  --panel: #181e2a;
+  --line: #252d3f;
+  --line-soft: #1d2435;
+  --brass: #c9a35d;
+  --brass-glow: #e3c98a;
+  --paper: #eee8da;
+  --paper-dim: #7a7669;
+  --danger: #c96a5e;
+  --ok: #6eaa7a;
+  --radius: 6px;
+}
+
+:global(.zz-faq-scope) *,
+:global(.zz-faq-scope) *::before,
+:global(.zz-faq-scope) *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  min-height: 100vh;
+  background-image: radial-gradient(ellipse 60% 40% at 10% -5%, rgba(201, 163, 93, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 90% 105%, rgba(201, 163, 93, 0.05) 0%, transparent 55%);
+}
+
+:global(.zz-faq-scope) ::selection {
+  background-color: var(--brass);
+  color: #222222;
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+/* ─── LANGUAGE SWITCH ─── */
+.lang-switch {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 50;
+  display: flex;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 3px;
+  gap: 2px;
+}
+.lang-btn {
+  padding: 6px 12px;
+  font-size: 11px;
+  font-family: "IBM Plex Mono", monospace;
+  letter-spacing: 0.05em;
+  color: var(--paper-dim);
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.lang-btn.active {
+  background: rgba(201, 163, 93, 0.15);
+  color: var(--brass-glow);
+}
+.lang-btn:hover:not(.active) {
+  color: var(--paper);
+}
+.lang-btn:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+/* ─── HEADER / SEAL ─── */
+.seal-icon {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 22px;
+  border: 1px solid rgba(201, 163, 93, 0.35);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brass);
+  background: rgba(201, 163, 93, 0.06);
+}
+.seal-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.eyebrow {
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  font-family: "IBM Plex Mono", monospace;
+  margin-bottom: 10px;
+}
+.eyebrow :global(span) {
+  color: var(--brass);
+}
+
+.page :global(h1) {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--paper);
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  line-height: 1.25;
+}
+
+.lede {
+  text-align: center;
+  font-size: 14px;
+  color: var(--paper-dim);
+  line-height: 1.65;
+  max-width: 480px;
+  margin: 0 auto 40px;
+}
+
+/* ─── THESIS BANNER ─── */
+.thesis {
+  background: var(--panel);
+  border: 1px solid rgba(201, 163, 93, 0.3);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 36px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.thesis-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--brass);
+  margin-top: 2px;
+}
+.thesis-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.thesis-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--paper);
+}
+.thesis-text :global(strong) {
+  color: var(--brass-glow);
+  font-weight: 600;
+}
+
+/* ─── SECTION LABEL ─── */
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  font-family: "IBM Plex Mono", monospace;
+  margin: 36px 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.section-label:first-of-type {
+  margin-top: 0;
+}
+
+/* ─── HOW TO USE IT WELL ─── */
+.howto-lede {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--paper-dim);
+  margin-bottom: 18px;
+}
+
+.howto-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 18px;
+  margin-bottom: 10px;
+}
+.howto-num {
+  flex-shrink: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--brass);
+  border: 1px solid rgba(201, 163, 93, 0.3);
+  background: rgba(201, 163, 93, 0.07);
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.howto-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--paper);
+  margin-bottom: 6px;
+}
+.howto-text {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--paper-dim);
+}
+.howto-text :global(strong) {
+  color: var(--brass-glow);
+  font-weight: 600;
+}
+.howto-text :global(em) {
+  color: var(--paper);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* ─── FAQ ITEM (accordion) ─── */
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: none;
+  border: none;
+  color: var(--paper);
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.faq-question:hover {
+  background: rgba(201, 163, 93, 0.04);
+}
+.faq-question:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: -2px;
+}
+.faq-chevron {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: var(--paper-dim);
+  transition: transform 0.2s;
+}
+.faq-item.open .faq-chevron {
+  transform: rotate(180deg);
+  color: var(--brass);
+}
+
+.faq-answer-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+.faq-item.open .faq-answer-wrap {
+  grid-template-rows: 1fr;
+}
+.faq-answer-inner {
+  overflow: hidden;
+}
+.faq-answer {
+  padding: 0 18px 18px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--paper-dim);
+}
+.faq-answer :global(p + p) {
+  margin-top: 12px;
+}
+.faq-answer :global(strong) {
+  color: var(--paper);
+  font-weight: 600;
+}
+.faq-answer :global(ul) {
+  margin: 12px 0 0;
+  padding-left: 18px;
+}
+.faq-answer :global(li) {
+  margin-bottom: 8px;
+}
+.faq-answer :global(li)::marker {
+  color: var(--brass);
+}
+.faq-answer :global(code) {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  background: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--brass-glow);
+}
+
+/* ─── HONEST-LIMITS CALLOUT (signature element) ─── */
+.limits-callout {
+  margin-top: 40px;
+  border: 1px solid rgba(194, 106, 94, 0.3);
+  border-radius: var(--radius);
+  background: rgba(194, 106, 94, 0.05);
+  padding: 22px;
+}
+.limits-callout-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--danger);
+  margin-bottom: 14px;
+  font-family: "IBM Plex Mono", monospace;
+}
+.limits-callout-label svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+.limits-list {
+  list-style: none;
+}
+.limits-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--paper);
+  padding: 9px 0;
+}
+.limits-list li + li {
+  border-top: 1px solid rgba(194, 106, 94, 0.12);
+}
+.limits-list .dash {
+  color: var(--danger);
+  flex-shrink: 0;
+  font-family: "IBM Plex Mono", monospace;
+}
+.limits-list :global(strong) {
+  color: var(--brass-glow);
+  font-weight: 600;
+}
+
+/* ─── FOOTER NOTE ─── */
+.footer-note {
+  text-align: center;
+  margin-top: 44px;
+  font-size: 11.5px;
+  color: var(--paper-dim);
+  line-height: 1.6;
+  font-family: "IBM Plex Mono", monospace;
+}
+.footer-note :global(a) {
+  color: var(--brass);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(201, 163, 93, 0.3);
+}
+.footer-note :global(a):hover {
+  color: var(--brass-glow);
+}
+
+/* ─── CLOSING SIGNATURE ─── */
+.closing {
+  text-align: center;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line-soft);
+}
+.closing-sign {
+  font-size: 13px;
+  color: var(--paper-dim);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+.closing-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--brass-glow);
+  letter-spacing: 0.01em;
+  margin-bottom: 6px;
+}
+.closing-date {
+  font-size: 11px;
+  color: var(--paper-dim);
+  font-family: "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 480px) {
+  .page :global(h1) {
+    font-size: 22px;
+  }
+  .lang-switch {
+    top: 12px;
+    right: 12px;
+  }
+}
