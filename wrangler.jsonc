@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "zero-zephyr",
+  "name": "zk-site",
   "account_id": "100d91685d98dccb5499b178294e8068",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-07-29",

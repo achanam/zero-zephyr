@@ -1,0 +1,89 @@
+:root {
+  --ink: #0e1118;
+  --brass: #c9a35d;
+  --brass-glow: #e3c98a;
+  --paper: #eee8da;
+  --paper-dim: #7a7669;
+  --radius: 6px;
+}
+
+:global(.zz-404-scope) *,
+:global(.zz-404-scope) *::before,
+:global(.zz-404-scope) *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: radial-gradient(ellipse 60% 40% at 10% -5%, rgba(201, 163, 93, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 90% 105%, rgba(201, 163, 93, 0.05) 0%, transparent 55%);
+}
+
+.page ::selection {
+  background-color: var(--brass);
+  color: #222;
+}
+
+.wrap {
+  text-align: center;
+  padding: 20px;
+}
+
+.heading {
+  font-size: clamp(42px, 10vw, 64px);
+  font-weight: 600;
+  font-family: "IBM Plex Mono", monospace;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+.heading span {
+  color: var(--brass-glow);
+}
+
+.sub {
+  font-size: 14px;
+  color: var(--paper-dim);
+  line-height: 1.65;
+  max-width: 360px;
+  margin: 0 auto 32px;
+}
+
+.cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--brass);
+  color: var(--ink);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: var(--radius);
+  padding: 14px 28px;
+  transition: background 0.15s, transform 0.1s;
+}
+.cta-primary svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+.cta-primary:hover {
+  background: var(--brass-glow);
+}
+.cta-primary:active {
+  transform: scale(0.99);
+}
+.cta-primary:focus-visible {
+  outline: 2px solid var(--brass-glow);
+  outline-offset: 3px;
+}
