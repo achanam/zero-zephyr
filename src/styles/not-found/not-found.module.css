@@ -1,12 +1,3 @@
-:root {
-  --ink: #0e1118;
-  --brass: #c9a35d;
-  --brass-glow: #e3c98a;
-  --paper: #eee8da;
-  --paper-dim: #7a7669;
-  --radius: 6px;
-}
-
 :global(.zz-404-scope) *,
 :global(.zz-404-scope) *::before,
 :global(.zz-404-scope) *::after {
@@ -16,20 +7,18 @@
 }
 
 .page {
-  background: var(--ink);
-  color: var(--paper);
-  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
   min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: radial-gradient(ellipse 60% 40% at 10% -5%, rgba(201, 163, 93, 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 90% 105%, rgba(201, 163, 93, 0.05) 0%, transparent 55%);
 }
 
 .page ::selection {
-  background-color: var(--brass);
-  color: #222;
+  background-color: var(--accent);
+  color: var(--on-accent);
 }
 
 .wrap {
@@ -38,20 +27,20 @@
 }
 
 .heading {
-  font-size: clamp(42px, 10vw, 64px);
-  font-weight: 600;
-  font-family: "IBM Plex Mono", monospace;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(48px, 10vw, 72px);
+  letter-spacing: -1px;
   line-height: 1.1;
   margin-bottom: 14px;
 }
 .heading span {
-  color: var(--brass-glow);
+  color: var(--accent);
 }
 
 .sub {
   font-size: 14px;
-  color: var(--paper-dim);
+  color: var(--text-soft);
   line-height: 1.65;
   max-width: 360px;
   margin: 0 auto 32px;
@@ -61,14 +50,13 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--brass);
-  color: var(--ink);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 13.5px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   text-decoration: none;
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
   padding: 14px 28px;
   transition: background 0.15s, transform 0.1s;
 }
@@ -78,12 +66,12 @@
   flex-shrink: 0;
 }
 .cta-primary:hover {
-  background: var(--brass-glow);
+  background: var(--accent-hover);
 }
 .cta-primary:active {
   transform: scale(0.99);
 }
 .cta-primary:focus-visible {
-  outline: 2px solid var(--brass-glow);
+  outline: 2px solid var(--accent-hover);
   outline-offset: 3px;
 }

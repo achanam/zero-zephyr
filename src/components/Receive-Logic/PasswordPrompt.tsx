@@ -19,7 +19,7 @@ export function PasswordPrompt({ onSubmit, wrongAttempt }: PasswordPromptProps) 
 
   return (
     <>
-      <p style={{ fontSize: 13, color: "var(--paper-dim)", marginBottom: 14 }}>
+      <p className={styles["status-note"]} style={{ marginBottom: 14 }}>
         This message is encrypted end-to-end.
       </p>
       <div className={styles.field}>

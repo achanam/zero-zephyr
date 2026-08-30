@@ -20,3 +20,40 @@ html {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Design tokens, shared across all pages */
+:root {
+  --bg: #f5f5f5;
+  --bg-soft: #fafafa;
+  --surface: #ffffff;
+  --surface-strong: #f0efed;
+  --text: #0c0a09;
+  --text-soft: #4e4e4e;
+  --text-muted: #777169;
+  --border: #e7e5e4;
+  --border-soft: #f0efed;
+  --border-strong: #d6d3d1;
+  --accent: #292524;
+  --accent-hover: #0c0a09;
+  --on-accent: #ffffff;
+  --danger: #dc2626;
+  --danger-soft: rgba(220, 38, 38, 0.06);
+  --danger-border: rgba(220, 38, 38, 0.25);
+  --success: #16a34a;
+
+  --orb-mint: #a7e5d3;
+  --orb-peach: #f4c5a8;
+  --orb-lavender: #c8b8e0;
+  --orb-sky: #a8c8e8;
+  --orb-rose: #e8b8c4;
+
+  --font-display: "EB Garamond", "Times New Roman", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --radius-pill: 9999px;
+  --radius-xl: 16px;
+  --radius-lg: 12px;
+  --radius-md: 8px;
+
+  --shadow-card: 0 4px 16px rgba(12, 10, 9, 0.05);
+}

@@ -106,9 +106,6 @@ export function PasswordField({
             value={manualPassword}
             onChange={(e) => onManualPasswordChange(e.target.value)}
           />
-          <div className={styles.hint}>
-            → Encrypted in this browser before it ever leaves your device. Share the link and password through separate channels.
-          </div>
         </>
       ) : (
         <>
@@ -150,9 +147,9 @@ export function PasswordField({
               disabled={locked}
               value={pwGenOptions.length}
               style={{
-                background: `linear-gradient(to right, var(--brass) 0%, var(--brass) ${
+                background: `linear-gradient(to right, var(--accent) 0%, var(--accent) ${
                   ((pwGenOptions.length - 5) / (99 - 5)) * 100
-                }%, var(--line) ${((pwGenOptions.length - 5) / (99 - 5)) * 100}%, var(--line) 100%)`,
+                }%, var(--border-strong) ${((pwGenOptions.length - 5) / (99 - 5)) * 100}%, var(--border-strong) 100%)`,
               }}
               onChange={(e) => updateOptions({ length: Number(e.target.value) })}
             />
@@ -176,9 +173,6 @@ export function PasswordField({
             </div>
           </div>
           {genError && <div className={styles["error-box"]} style={{ marginTop: 10 }}>{genError}</div>}
-          <div className={styles.hint} style={{ marginTop: 10 }}>
-            → Generated locally with a cryptographically secure random generator. Never sent to the server. Save it now — it will not be shown again after you leave this page.
-          </div>
         </>
       )}
     </div>

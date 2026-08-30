@@ -35,9 +35,6 @@ export function ResultPanel({ link, revealedPassword }: ResultPanelProps) {
         <input type="text" readOnly value={link} />
         <CopyButton text={link} />
       </div>
-      <div className={styles.hint}>
-        → Without the password, this data cannot be recovered by anyone — including us. Send it through a different channel than the link.
-      </div>
 
       {revealedPassword && (
         <div className={styles["pw-reveal-box"]}>
@@ -47,9 +44,6 @@ export function ResultPanel({ link, revealedPassword }: ResultPanelProps) {
           <div className={styles["pw-reveal-row"]}>
             <input type="text" readOnly value={revealedPassword} />
             <CopyButton text={revealedPassword} />
-          </div>
-          <div className={styles["pw-reveal-warning"]}>
-            → This password will not be shown again after you leave this page. Save it now and send it to the recipient through a different channel than the link — anyone with both the link and this password can decrypt the contents.
           </div>
         </div>
       )}

@@ -5,6 +5,16 @@ import styles from "@/styles/not-found/not-found.module.css";
 export const metadata: Metadata = {
   title: "404 — Zero Zephyr",
   robots: { index: false, follow: false },
+  openGraph: {
+    title: "404 — Zero Zephyr",
+    description: "End-to-end encrypted, zero-knowledge sharing.",
+    images: [{ url: "https://cdn.achanam.com/@zero-zephyr/icons/og-img" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "404 — Zero Zephyr",
+    images: ["https://cdn.achanam.com/@zero-zephyr/icons/og-img"],
+  },
 };
 
 export default function NotFound() {

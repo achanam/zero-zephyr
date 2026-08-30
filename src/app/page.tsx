@@ -6,6 +6,17 @@ import styles from "@/styles/home/home.module.css";
 export const metadata: Metadata = {
   title: "Zero Zephyr",
   alternates: { canonical: "https://z.achanam.com/" },
+  openGraph: {
+    title: "Zero Zephyr",
+    description: "End-to-end encrypted, zero-knowledge sharing.",
+    url: "https://z.achanam.com/",
+    images: [{ url: "https://cdn.achanam.com/@zero-zephyr/icons/og-img" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Zero Zephyr",
+    images: ["https://cdn.achanam.com/@zero-zephyr/icons/og-img"],
+  },
 };
 
 export default function HomePage() {
@@ -25,28 +36,33 @@ export default function HomePage() {
         </header>
         <p className={styles.tagline}>// nothing kept is nothing to lose</p>
 
-        <div className={styles["hero-icon"]}>
-          <BrandLockIcon />
+        <div className={styles["hero-atmosphere"]} aria-hidden="true">
+          <div className={`${styles.orb} ${styles["orb-mint"]}`} />
+          <div className={`${styles.orb} ${styles["orb-peach"]}`} />
+          <div className={`${styles.orb} ${styles["orb-lavender"]}`} />
         </div>
 
-        <div className={styles["zk-badge"]}>
-          <ShieldIcon /> Zero-Knowledge Architecture
+        <div className={styles.hero}>
+          <div className={styles["zk-badge"]}>
+            <ShieldIcon /> Zero-Knowledge Architecture
+          </div>
+
+          <h2 className={styles["hero-title"]}>
+            Say it once.
+            <br />
+            Then it&apos;s <span>gone</span>.
+          </h2>
+          <p className={styles["hero-sub"]}>
+            Zero Zephyr is built on zero-knowledge encryption: your message is sealed inside your own browser before
+            it ever reaches us. We don&apos;t hold the key, so we physically cannot read what you send, not now, not
+            ever.
+          </p>
+
+          <Link href="/send" className={styles["cta-primary"]}>
+            <SendIcon /> Get Started
+          </Link>
+          <p className={styles["cta-note"]}>No account needed. Takes about 20 seconds.</p>
         </div>
-
-        <h2 className={styles["hero-title"]}>
-          Say it once.
-          <br />
-          Then it&apos;s <span>gone</span>.
-        </h2>
-        <p className={styles["hero-sub"]}>
-          Zero Zephyr is built on zero-knowledge encryption: your message is sealed inside your own browser before it
-          ever reaches us. We don&apos;t hold the key, so we physically cannot read what you send, not now, not ever.
-        </p>
-
-        <Link href="/send" className={styles["cta-primary"]}>
-          <SendIcon /> Get Started
-        </Link>
-        <p className={styles["cta-note"]}>No account needed. Takes about 20 seconds.</p>
 
         <div className={styles["section-label"]}>How it works</div>
 
@@ -85,9 +101,19 @@ export default function HomePage() {
 
         <div className={styles["principle-strip"]}>
           <div className={styles["principle-item"]}>
-            <svg className={styles["principle-icon"]} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className={styles["principle-icon"]}
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <rect x="3" y="7" width="10" height="6.5" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-              <path d="M5.3 7V5.3C5.3 4 6.4 3 7.7 3v0c1.3 0 2.4 1 2.4 2.3V7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+              <path
+                d="M5.3 7V5.3C5.3 4 6.4 3 7.7 3v0c1.3 0 2.4 1 2.4 2.3V7"
+                stroke="currentColor"
+                strokeWidth="1.3"
+                strokeLinecap="round"
+              />
             </svg>
             <div className={styles["principle-label"]}>
               Zero-knowledge
@@ -96,7 +122,12 @@ export default function HomePage() {
             </div>
           </div>
           <div className={styles["principle-item"]}>
-            <svg className={styles["principle-icon"]} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className={styles["principle-icon"]}
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
               <path d="M8 4.5V8l2.5 1.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

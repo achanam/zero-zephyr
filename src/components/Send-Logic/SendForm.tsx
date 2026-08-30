@@ -238,7 +238,7 @@ export function SendForm() {
 
         <div className={styles.field}>
           <label>
-            <KeyIcon /> Internal Key <span style={{ color: "var(--paper-dim)", fontWeight: 400 }}>(optional)</span>
+            <KeyIcon /> Internal Key <span style={{ color: "var(--text-muted)", fontWeight: 400 }}>(optional)</span>
           </label>
           <input
             type="password"
@@ -248,19 +248,6 @@ export function SendForm() {
             spellCheck={false}
             {...register("apiKey")}
           />
-          <div className={styles.hint}>
-            {mode === "file" ? (
-              hasKey ? (
-                <>→ Key provided — max <strong>100 MB</strong>, no send limit.</>
-              ) : (
-                <>→ Without a key: max <strong>20 MB</strong>, limited to 5 sends / 30 min. With a valid key: max <strong>100 MB</strong>, no send limit.</>
-              )
-            ) : hasKey ? (
-              <>→ Key provided — no send limit.</>
-            ) : (
-              <>→ Without a key: limited to 9 sends / 17 min per IP. With a valid key: no send limit.</>
-            )}
-          </div>
         </div>
 
         <Controller
@@ -293,7 +280,6 @@ export function SendForm() {
                 <Dropdown options={MAX_VIEWS_OPTIONS} value={field.value} onChange={field.onChange} disabled={burnAfterRead} />
               )}
             />
-            <div className={styles.hint}>→ Server enforces 1–9, regardless of selection.</div>
           </div>
           <div className={styles.field}>
             <label>
@@ -304,7 +290,6 @@ export function SendForm() {
               control={control}
               render={({ field }) => <Dropdown options={EXPIRES_OPTIONS} value={field.value} onChange={field.onChange} />}
             />
-            <div className={styles.hint}>→ Server enforces 1–72h, regardless of selection.</div>
           </div>
         </div>
 

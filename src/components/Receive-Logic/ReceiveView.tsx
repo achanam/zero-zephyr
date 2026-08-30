@@ -117,7 +117,7 @@ export function ReceiveView({ slug }: { slug: string }) {
         </svg>
       </div>
 
-      {phase.step === "loading" && <p style={{ color: "var(--paper-dim)", fontSize: 13 }}>Opening vault…</p>}
+      {phase.step === "loading" && <p className={styles["status-note"]}>Opening…</p>}
 
       {phase.step === "fatal" && <div className={styles["error-box"]}>{phase.message}</div>}
 

@@ -1,18 +1,3 @@
-:root {
-  --ink: #0e1118;
-  --ink-soft: #141820;
-  --panel: #181e2a;
-  --line: #252d3f;
-  --line-soft: #1d2435;
-  --brass: #c9a35d;
-  --brass-glow: #e3c98a;
-  --paper: #eee8da;
-  --paper-dim: #7a7669;
-  --danger: #c96a5e;
-  --ok: #6eaa7a;
-  --radius: 6px;
-}
-
 :global(.zz-faq-scope) *,
 :global(.zz-faq-scope) *::before,
 :global(.zz-faq-scope) *::after {
@@ -22,17 +7,15 @@
 }
 
 .page {
-  background: var(--ink);
-  color: var(--paper);
-  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
   min-height: 100vh;
-  background-image: radial-gradient(ellipse 60% 40% at 10% -5%, rgba(201, 163, 93, 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 90% 105%, rgba(201, 163, 93, 0.05) 0%, transparent 55%);
 }
 
 :global(.zz-faq-scope) ::selection {
-  background-color: var(--brass);
-  color: #222222;
+  background-color: var(--accent);
+  color: var(--on-accent);
 }
 
 .wrap {
@@ -41,55 +24,56 @@
   padding: 48px 20px 80px;
 }
 
-/* ─── LANGUAGE SWITCH ─── */
+/* language switch */
 .lang-switch {
   position: fixed;
   top: 18px;
   right: 18px;
   z-index: 50;
   display: flex;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
   padding: 3px;
   gap: 2px;
+  box-shadow: var(--shadow-card);
 }
 .lang-btn {
   padding: 6px 12px;
   font-size: 11px;
-  font-family: "IBM Plex Mono", monospace;
-  letter-spacing: 0.05em;
-  color: var(--paper-dim);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
   background: none;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-pill);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
 .lang-btn.active {
-  background: rgba(201, 163, 93, 0.15);
-  color: var(--brass-glow);
+  background: var(--surface-strong);
+  color: var(--accent);
 }
 .lang-btn:hover:not(.active) {
-  color: var(--paper);
+  color: var(--text);
 }
 .lang-btn:focus-visible {
-  outline: 2px solid var(--brass);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* ─── HEADER / SEAL ─── */
+/* header / seal */
 .seal-icon {
   width: 44px;
   height: 44px;
   margin: 0 auto 22px;
-  border: 1px solid rgba(201, 163, 93, 0.35);
+  border: 1px solid var(--border);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--brass);
-  background: rgba(201, 163, 93, 0.06);
+  color: var(--accent);
+  background: var(--surface);
 }
 .seal-icon svg {
   width: 20px;
@@ -99,40 +83,42 @@
 .eyebrow {
   text-align: center;
   font-size: 10px;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--paper-dim);
-  font-family: "IBM Plex Mono", monospace;
+  color: var(--text-muted);
   margin-bottom: 10px;
 }
 .eyebrow :global(span) {
-  color: var(--brass);
+  color: var(--accent);
 }
 
 .page :global(h1) {
   text-align: center;
-  font-size: 26px;
-  font-weight: 600;
-  color: var(--paper);
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 34px;
+  color: var(--text);
+  letter-spacing: -0.4px;
   margin-bottom: 14px;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .lede {
   text-align: center;
   font-size: 14px;
-  color: var(--paper-dim);
+  color: var(--text-soft);
   line-height: 1.65;
   max-width: 480px;
   margin: 0 auto 40px;
 }
 
-/* ─── THESIS BANNER ─── */
+/* thesis banner */
 .thesis {
-  background: var(--panel);
-  border: 1px solid rgba(201, 163, 93, 0.3);
-  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
   padding: 20px 22px;
   margin-bottom: 36px;
   display: flex;
@@ -143,7 +129,7 @@
   flex-shrink: 0;
   width: 18px;
   height: 18px;
-  color: var(--brass);
+  color: var(--accent);
   margin-top: 2px;
 }
 .thesis-icon svg {
@@ -153,33 +139,32 @@
 .thesis-text {
   font-size: 13.5px;
   line-height: 1.6;
-  color: var(--paper);
+  color: var(--text);
 }
 .thesis-text :global(strong) {
-  color: var(--brass-glow);
+  color: var(--accent);
   font-weight: 600;
 }
 
-/* ─── SECTION LABEL ─── */
 .section-label {
   font-size: 10px;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--paper-dim);
-  font-family: "IBM Plex Mono", monospace;
+  color: var(--text-muted);
   margin: 36px 0 14px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--border);
 }
 .section-label:first-of-type {
   margin-top: 0;
 }
 
-/* ─── HOW TO USE IT WELL ─── */
+/* how to use it well */
 .howto-lede {
   font-size: 13.5px;
   line-height: 1.65;
-  color: var(--paper-dim);
+  color: var(--text-soft);
   margin-bottom: 18px;
 }
 
@@ -187,21 +172,22 @@
   display: flex;
   gap: 16px;
   align-items: flex-start;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
   padding: 18px;
   margin-bottom: 10px;
+  box-shadow: var(--shadow-card);
 }
 .howto-num {
   flex-shrink: 0;
-  font-family: "IBM Plex Mono", monospace;
   font-size: 11px;
-  letter-spacing: 0.04em;
-  color: var(--brass);
-  border: 1px solid rgba(201, 163, 93, 0.3);
-  background: rgba(201, 163, 93, 0.07);
-  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  border-radius: var(--radius-md);
   width: 28px;
   height: 28px;
   display: flex;
@@ -211,29 +197,29 @@
 .howto-title {
   font-size: 14px;
   font-weight: 600;
-  color: var(--paper);
+  color: var(--text);
   margin-bottom: 6px;
 }
 .howto-text {
   font-size: 13.5px;
   line-height: 1.65;
-  color: var(--paper-dim);
+  color: var(--text-soft);
 }
 .howto-text :global(strong) {
-  color: var(--brass-glow);
+  color: var(--accent);
   font-weight: 600;
 }
 .howto-text :global(em) {
-  color: var(--paper);
+  color: var(--text);
   font-style: normal;
   font-weight: 500;
 }
 
-/* ─── FAQ ITEM (accordion) ─── */
+/* faq accordion */
 .faq-item {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
   margin-bottom: 10px;
   overflow: hidden;
 }
@@ -246,8 +232,8 @@
   padding: 16px 18px;
   background: none;
   border: none;
-  color: var(--paper);
-  font-family: "IBM Plex Sans", sans-serif;
+  color: var(--text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   text-align: left;
@@ -255,22 +241,22 @@
   transition: background 0.15s;
 }
 .faq-question:hover {
-  background: rgba(201, 163, 93, 0.04);
+  background: var(--surface-strong);
 }
 .faq-question:focus-visible {
-  outline: 2px solid var(--brass);
+  outline: 2px solid var(--accent);
   outline-offset: -2px;
 }
 .faq-chevron {
   flex-shrink: 0;
   width: 14px;
   height: 14px;
-  color: var(--paper-dim);
+  color: var(--text-muted);
   transition: transform 0.2s;
 }
 .faq-item.open .faq-chevron {
   transform: rotate(180deg);
-  color: var(--brass);
+  color: var(--accent);
 }
 
 .faq-answer-wrap {
@@ -288,13 +274,13 @@
   padding: 0 18px 18px;
   font-size: 13.5px;
   line-height: 1.7;
-  color: var(--paper-dim);
+  color: var(--text-soft);
 }
 .faq-answer :global(p + p) {
   margin-top: 12px;
 }
 .faq-answer :global(strong) {
-  color: var(--paper);
+  color: var(--text);
   font-weight: 600;
 }
 .faq-answer :global(ul) {
@@ -305,24 +291,23 @@
   margin-bottom: 8px;
 }
 .faq-answer :global(li)::marker {
-  color: var(--brass);
+  color: var(--accent);
 }
 .faq-answer :global(code) {
-  font-family: "IBM Plex Mono", monospace;
   font-size: 12px;
-  background: var(--ink-soft);
-  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 1px 6px;
-  color: var(--brass-glow);
+  color: var(--accent);
 }
 
-/* ─── HONEST-LIMITS CALLOUT (signature element) ─── */
+/* honest-limits callout */
 .limits-callout {
   margin-top: 40px;
-  border: 1px solid rgba(194, 106, 94, 0.3);
-  border-radius: var(--radius);
-  background: rgba(194, 106, 94, 0.05);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-xl);
+  background: var(--danger-soft);
   padding: 22px;
 }
 .limits-callout-label {
@@ -330,11 +315,11 @@
   align-items: center;
   gap: 8px;
   font-size: 10.5px;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--danger);
   margin-bottom: 14px;
-  font-family: "IBM Plex Mono", monospace;
 }
 .limits-callout-label svg {
   width: 13px;
@@ -349,70 +334,67 @@
   gap: 10px;
   font-size: 13px;
   line-height: 1.6;
-  color: var(--paper);
+  color: var(--text);
   padding: 9px 0;
 }
 .limits-list li + li {
-  border-top: 1px solid rgba(194, 106, 94, 0.12);
+  border-top: 1px solid var(--danger-border);
 }
 .limits-list .dash {
   color: var(--danger);
   flex-shrink: 0;
-  font-family: "IBM Plex Mono", monospace;
 }
 .limits-list :global(strong) {
-  color: var(--brass-glow);
+  color: var(--accent);
   font-weight: 600;
 }
 
-/* ─── FOOTER NOTE ─── */
+/* footer note */
 .footer-note {
   text-align: center;
   margin-top: 44px;
   font-size: 11.5px;
-  color: var(--paper-dim);
+  color: var(--text-muted);
   line-height: 1.6;
-  font-family: "IBM Plex Mono", monospace;
 }
 .footer-note :global(a) {
-  color: var(--brass);
+  color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid rgba(201, 163, 93, 0.3);
+  border-bottom: 1px solid var(--border-strong);
 }
 .footer-note :global(a):hover {
-  color: var(--brass-glow);
+  color: var(--accent-hover);
 }
 
-/* ─── CLOSING SIGNATURE ─── */
+/* closing signature */
 .closing {
   text-align: center;
   margin-top: 36px;
   padding-top: 28px;
-  border-top: 1px solid var(--line-soft);
+  border-top: 1px solid var(--border);
 }
 .closing-sign {
   font-size: 13px;
-  color: var(--paper-dim);
+  color: var(--text-muted);
   font-style: italic;
   margin-bottom: 4px;
 }
 .closing-name {
   font-size: 15px;
   font-weight: 600;
-  color: var(--brass-glow);
+  color: var(--accent);
   letter-spacing: 0.01em;
   margin-bottom: 6px;
 }
 .closing-date {
   font-size: 11px;
-  color: var(--paper-dim);
-  font-family: "IBM Plex Mono", monospace;
+  color: var(--text-muted);
   letter-spacing: 0.04em;
 }
 
 @media (max-width: 480px) {
   .page :global(h1) {
-    font-size: 22px;
+    font-size: 27px;
   }
   .lang-switch {
     top: 12px;

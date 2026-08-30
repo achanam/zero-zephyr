@@ -21,7 +21,7 @@ export function FileDrop({ file, onFile }: FileDropProps) {
 
   return (
     <div
-      className={`${styles.filedrop} ${file ? styles["has-file"] : ""}`}
+      className={`${styles.filedrop} ${file ? styles["has-file"] : ""} ${dragOver ? styles["drag-over"] : ""}`}
       onClick={() => inputRef.current?.click()}
       onDragOver={(e) => {
         e.preventDefault();
@@ -34,7 +34,6 @@ export function FileDrop({ file, onFile }: FileDropProps) {
         const dropped = e.dataTransfer.files?.[0];
         if (dropped) onFile(dropped);
       }}
-      style={dragOver ? { borderColor: "rgba(201,163,93,0.6)" } : undefined}
     >
       <input
         ref={inputRef}

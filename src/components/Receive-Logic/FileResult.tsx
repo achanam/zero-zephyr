@@ -95,7 +95,7 @@ export function FileResult({
 
   return (
     <>
-      <p style={{ fontSize: 12, color: "var(--paper-dim)", marginBottom: 4 }}>{title}</p>
+      <p className={styles["status-note"]}>{title}</p>
       <div className={styles["file-card"]}>
         <div className={styles["file-card-icon"]}>
           <FileIcon />

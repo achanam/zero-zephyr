@@ -15,7 +15,7 @@ export function TextResult({ title, content, burned }: TextResultProps) {
 
   return (
     <>
-      <p style={{ fontSize: 12, color: "var(--paper-dim)", marginBottom: 4 }}>{title}</p>
+      <p className={styles["status-note"]}>{title}</p>
       <div className={styles["content-box"]}>{content}</div>
       <button
         type="button"
