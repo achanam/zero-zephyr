@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getEnv } from "@/lib/cf";
-import { corsFromRequest, originAllowed, jsonOrHtml, json } from "@/lib/zk/security";
+import { corsFromRequest, originAllowed, jsonOrHtml, json, getClientIp } from "@/lib/zk/security";
 import { sbGetBySlug, deactivateAndCleanup } from "@/lib/zk/supabase";
 import { SLUG_PATTERN } from "@/lib/zk/validation";
+import { verifyDownloadToken } from "@/lib/zk/download-token";
+import { checkAndRecordPublicAccess } from "@/lib/zk/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -11,9 +13,8 @@ export async function OPTIONS(request: NextRequest) {
   return new NextResponse(null, { status: 204, headers: corsFromRequest(request) });
 }
 
-// PUBLIC — only for files that still have views left (not yet burned via
-// /api/receive/[slug]). Separate path because a file's binary payload can
-// be large, kept apart from the JSON metadata response in /api/receive.
+// Requires ?token= minted by /receive — see download-token.ts. Only for
+// files still within max_views (not yet burned).
 export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const cors = corsFromRequest(request);
   const env = await getEnv();
@@ -36,6 +37,15 @@ async function handleDownload(
     return jsonOrHtml(request, { error: "Forbidden — origin not allowed" }, 403, cors);
   }
 
+  const accessResult = await checkAndRecordPublicAccess(env.RATE_LIMIT_KV, getClientIp(request), "/download");
+  if (!accessResult.allowed) {
+    return json(
+      { error: "Too many requests from this IP. Please slow down.", retry_after_seconds: accessResult.retryAfterSeconds },
+      429,
+      cors
+    );
+  }
+
   const { slug } = await params;
   if (!SLUG_PATTERN.test(slug)) {
     return jsonOrHtml(request, { error: "File not found" }, 404, cors);
@@ -52,6 +62,16 @@ async function handleDownload(
   if (row.expires_at && new Date(row.expires_at) < new Date()) {
     await deactivateAndCleanup(env, row);
     return json({ error: "This send has expired" }, 410, cors);
+  }
+
+  const token = new URL(request.url).searchParams.get("token");
+  if (!(await verifyDownloadToken(env.RATE_LIMIT_KV, slug, token))) {
+    return jsonOrHtml(
+      request,
+      { error: "Missing or invalid download token — reopen the link to try again." },
+      403,
+      cors
+    );
   }
 
   const obj = await env.BUCKET.get(row.file_path);

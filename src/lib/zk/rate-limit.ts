@@ -1,11 +1,9 @@
-// Ported 1:1 from indexZk.js. Three separate rate-limit mechanisms — don't
-// merge them, each has its own design reason (see per-function comments):
-//   1. checkAndRecordPublicSend  — per-IP, per-endpoint, timestamp array
-//      (needs a precise retry_after shown to the user).
-//   2. checkAndRecordGlobalCeiling — cross-IP backstop, single counter
-//      (not for individual users, just an aggregate cap).
-//   3. checkLockout/recordFailedAttempt — brute-force protection for
-//      INTERNAL_KEY itself (repeated wrong X-Api-Key → lockout).
+// Ported 1:1 from indexZk.js. Four rate-limit mechanisms, kept separate:
+//   1. checkAndRecordPublicSend — per-IP per-endpoint.
+//   2. checkAndRecordGlobalCeiling — cross-IP aggregate cap.
+//   3. checkLockout/recordFailedAttempt — INTERNAL_KEY brute-force lockout.
+//   4. checkAndRecordPublicAccess — per-IP throttle for /receive, /download.
+//      Only limits request rate, never touches view_count/burn state.
 
 import type { Env } from "../cf";
 
@@ -155,4 +153,39 @@ export async function recordFailedAttempt(kv: Env["RATE_LIMIT_KV"], ip: string) 
 export async function clearFailedAttempts(kv: Env["RATE_LIMIT_KV"], ip: string) {
   await kv.delete(`attempts:${ip}`);
   await kv.delete(`lock:${ip}`);
+}
+
+// No rollback (unlike sends) — a failed request still counts as one real
+// access attempt. Limits are generous: a real recipient only needs one
+// /receive call per link.
+export const PUBLIC_ACCESS_LIMITS: Record<string, { maxAttempts: number; windowSeconds: number }> = {
+  "/receive": { maxAttempts: 20, windowSeconds: 10 * 60 },
+  "/download": { maxAttempts: 20, windowSeconds: 10 * 60 },
+};
+
+export async function checkAndRecordPublicAccess(kv: Env["RATE_LIMIT_KV"], ip: string, path: string) {
+  const limit = PUBLIC_ACCESS_LIMITS[path];
+  const key = `pubaccess:${path}:${ip}`;
+  const now = Date.now();
+  const windowStart = now - limit.windowSeconds * 1000;
+
+  const raw = await kv.get(key);
+  let timestamps: number[] = [];
+  if (raw) {
+    try {
+      timestamps = (JSON.parse(raw) as number[]).filter((t) => t > windowStart);
+    } catch {
+      timestamps = [];
+    }
+  }
+
+  if (timestamps.length >= limit.maxAttempts) {
+    const oldestInWindow = Math.min(...timestamps);
+    const retryAfterSeconds = Math.max(1, Math.ceil((oldestInWindow + limit.windowSeconds * 1000 - now) / 1000));
+    return { allowed: false as const, retryAfterSeconds };
+  }
+
+  timestamps.push(now);
+  await kv.put(key, JSON.stringify(timestamps), { expirationTtl: limit.windowSeconds });
+  return { allowed: true as const };
 }

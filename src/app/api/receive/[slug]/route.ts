@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getEnv } from "@/lib/cf";
-import { corsFromRequest, originAllowed, jsonOrHtml, json } from "@/lib/zk/security";
+import { corsFromRequest, originAllowed, jsonOrHtml, json, getClientIp } from "@/lib/zk/security";
 import { sbGetBySlug, sbConditionalUpdateBySlug, sbConditionalDeleteBySlug, deactivateAndCleanup } from "@/lib/zk/supabase";
 import { SLUG_PATTERN } from "@/lib/zk/validation";
+import { mintDownloadToken } from "@/lib/zk/download-token";
+import { checkAndRecordPublicAccess } from "@/lib/zk/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +44,15 @@ async function handleReceive(
 ) {
   if (!originAllowed(request)) {
     return jsonOrHtml(request, { error: "Forbidden — origin not allowed" }, 403, cors);
+  }
+
+  const accessResult = await checkAndRecordPublicAccess(env.RATE_LIMIT_KV, getClientIp(request), "/receive");
+  if (!accessResult.allowed) {
+    return json(
+      { error: "Too many requests from this IP. Please slow down.", retry_after_seconds: accessResult.retryAfterSeconds },
+      429,
+      cors
+    );
   }
 
   const { slug } = await params;
@@ -135,7 +146,9 @@ async function handleReceive(
   };
 
   if (row.type !== "text") {
-    payload.download_url = `${new URL(request.url).origin}/api/download/${slug}`;
+    // required by /download — see download-token.ts
+    const token = await mintDownloadToken(env.RATE_LIMIT_KV, slug);
+    payload.download_url = `${new URL(request.url).origin}/api/download/${slug}?token=${token}`;
   }
 
   return json(payload, 200, cors);

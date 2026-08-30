@@ -35,22 +35,16 @@ export class TooLargeError extends Error {
   tooLarge = true as const;
 }
 
-/**
- * Read + parse a JSON body under a hard byte ceiling, in two layers:
- *   1. Content-Length pre-check (fast, but not authoritative — can be
- *      missing or wrong, so it can't be the only guard)
- *   2. Streamed read with a running byte count, aborting as soon as it
- *      exceeds maxBytes
- * Used for /send/text since that body is attacker-reachable without a key.
- */
-export async function readJsonWithLimit(request: Request, maxBytes: number): Promise<unknown> {
+// Content-Length pre-check + streamed read that aborts once maxBytes is
+// exceeded, so an oversized body is never fully buffered first.
+async function readStreamWithLimit(request: Request, maxBytes: number): Promise<Uint8Array> {
   const declaredLength = request.headers.get("Content-Length");
   if (declaredLength && Number(declaredLength) > maxBytes) {
     throw new TooLargeError("Request body exceeds the allowed size.");
   }
 
   if (!request.body) {
-    return JSON.parse("");
+    return new Uint8Array(0);
   }
 
   const reader = request.body.getReader();
@@ -74,7 +68,18 @@ export async function readJsonWithLimit(request: Request, maxBytes: number): Pro
     combined.set(chunk, offset);
     offset += chunk.byteLength;
   }
+  return combined;
+}
 
-  const text = new TextDecoder().decode(combined);
-  return JSON.parse(text);
+/** Parses JSON under maxBytes — used by /send/text. */
+export async function readJsonWithLimit(request: Request, maxBytes: number): Promise<unknown> {
+  const bytes = await readStreamWithLimit(request, maxBytes);
+  if (bytes.byteLength === 0) return JSON.parse("");
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+/** Raw-bytes version — used by /send/file. */
+export async function readBytesWithLimit(request: Request, maxBytes: number): Promise<ArrayBuffer> {
+  const bytes = await readStreamWithLimit(request, maxBytes);
+  return bytes.buffer as ArrayBuffer;
 }

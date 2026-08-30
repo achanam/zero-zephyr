@@ -9,7 +9,7 @@ import {
   rollbackPublicSendIfNeeded,
 } from "@/lib/zk/rate-limit";
 import { sbInsert } from "@/lib/zk/supabase";
-import { validateExpiresInHours, validateMaxViews, randomSlug } from "@/lib/zk/validation";
+import { validateExpiresInHours, validateMaxViews, randomSlug, readBytesWithLimit, TooLargeError } from "@/lib/zk/validation";
 
 export const dynamic = "force-dynamic";
 
@@ -109,25 +109,32 @@ async function handleSendFile(request: NextRequest, env: Awaited<ReturnType<type
     return json({ error: "X-Max-Views must be a whole number between 1 and 9." }, 400, cors);
   }
 
-  const encryptedBody = await request.arrayBuffer();
+  // aborts early if over maxAllowedBytes, unlike request.arrayBuffer()
+  let encryptedBody: ArrayBuffer;
+  try {
+    encryptedBody = await readBytesWithLimit(request, maxAllowedBytes);
+  } catch (err) {
+    await rollback();
+    if (err instanceof TooLargeError) {
+      return json(
+        {
+          error: `File too large. ${
+            authenticated
+              ? `Max ${AUTH_MAX_BYTES / 1024 / 1024} MB with Internal Key.`
+              : `Max ${PUBLIC_MAX_BYTES / 1024 / 1024} MB without Internal Key. Provide a valid key to upload up to ${AUTH_MAX_BYTES / 1024 / 1024} MB.`
+          }`,
+          requires_key: !authenticated,
+        },
+        413,
+        cors
+      );
+    }
+    throw err;
+  }
+
   if (encryptedBody.byteLength === 0) {
     await rollback();
     return json({ error: "File is empty" }, 400, cors);
-  }
-  if (encryptedBody.byteLength > maxAllowedBytes) {
-    await rollback();
-    return json(
-      {
-        error: `File too large. ${
-          authenticated
-            ? `Max ${AUTH_MAX_BYTES / 1024 / 1024} MB with Internal Key.`
-            : `Max ${PUBLIC_MAX_BYTES / 1024 / 1024} MB without Internal Key. Provide a valid key to upload up to ${AUTH_MAX_BYTES / 1024 / 1024} MB.`
-        }`,
-        requires_key: !authenticated,
-      },
-      413,
-      cors
-    );
   }
 
   const slug = randomSlug();
