@@ -298,6 +298,8 @@
   font-size: 13px;
   color: var(--text);
   font-weight: 500;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 .filedrop-size {
   font-size: 11px;
