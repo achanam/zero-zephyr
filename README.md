@@ -1,5 +1,10 @@
 # Zero Zephyr
 
+![Zero Zephyr](https://cdn.achanam.com/@dev/github/zero-zephyr)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?logo=github&logoColor=white)](#open-source-and-contributions)
+
 Zero Zephyr is a small zero knowledge tool for sharing text or files through a link that expires and deletes itself after being read.
 
 ## How it works
@@ -31,7 +36,7 @@ If someone wants to send a patch adding Argon2id as an option, contributions are
 
 ## Open source and contributions
 
-This project is open source and anyone can use it, fork it, or build on top of it. Pull requests are welcome, whether that is a bug fix, a new feature, or just cleaning up something that looks messy. If you use this code, no need to ask permission first.
+This project is open source and anyone can use it, fork it, or build on top of it. Pull requests are welcome, whether that is a bug fix, a new feature, or just cleaning up something that looks messy. If you use this code, no need to ask permission first. It is licensed under [MIT](LICENSE).
 
 ## Disclaimer
 
