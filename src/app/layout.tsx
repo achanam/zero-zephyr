@@ -1,6 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import { Inter, EB_Garamond } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import "@/styles/globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
+  display: "optional",
+});
+
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  weight: "variable",
+  variable: "--font-eb-garamond",
+  display: "optional",
+});
 
 const ogImage = "https://cdn.achanam.com/@zero-zephyr/icons/og-img";
 
@@ -26,14 +41,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" style={{ background: "#f5f5f5" }}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=EB+Garamond:wght@300;400&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${inter.variable} ${ebGaramond.variable}`} style={{ background: "#f5f5f5" }}>
       <body style={{ background: "#f5f5f5" }}>
         <Navbar />
         {children}
