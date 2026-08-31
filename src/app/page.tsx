@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BrandLockIcon, HelpCircleIcon, ShieldIcon, SendIcon } from "@/components/Send-Logic/icons";
+import { HelpCircleIcon, ShieldIcon, SendIcon } from "@/components/Send-Logic/icons";
 import styles from "@/styles/home/home.module.css";
 
 export const metadata: Metadata = {
@@ -23,17 +23,6 @@ export default function HomePage() {
   return (
     <div className={`zz-home-scope ${styles.page}`}>
       <div className={styles.wrap}>
-        <header className={styles.brand}>
-          <div className={styles["brand-mark"]}>
-            <BrandLockIcon className={styles["brand-icon"]} />
-            <h1>
-              ZERO <span>ZEPHYR</span>
-            </h1>
-          </div>
-          <Link href="/faq" aria-label="Read the security FAQ" className={styles["faq-link"]}>
-            <HelpCircleIcon /> FAQ
-          </Link>
-        </header>
         <p className={styles.tagline}>// nothing kept is nothing to lose</p>
 
         <div className={styles["hero-atmosphere"]} aria-hidden="true">

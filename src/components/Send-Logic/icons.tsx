@@ -122,6 +122,13 @@ export const BrandLockIcon = (p: IconProps) => (
   </svg>
 );
 
+export const HomeIcon = (p: IconProps) => (
+  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...p}>
+    <path d="M2 7.5L8 2.5l6 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3.5 6.5V13a1 1 0 001 1h7a1 1 0 001-1V6.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 export const HelpCircleIcon = (p: IconProps) => (
   <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...p}>
     <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.3" />

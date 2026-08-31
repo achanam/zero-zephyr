@@ -27,7 +27,7 @@
 /* language switch */
 .lang-switch {
   position: fixed;
-  top: 18px;
+  top: 72px;
   right: 18px;
   z-index: 50;
   display: flex;
@@ -397,7 +397,7 @@
     font-size: 27px;
   }
   .lang-switch {
-    top: 12px;
+    top: 66px;
     right: 12px;
   }
 }

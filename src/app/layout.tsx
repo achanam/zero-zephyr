@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Navbar } from "@/components/Navbar";
 import "@/styles/globals.css";
 
 const ogImage = "https://cdn.achanam.com/@zero-zephyr/icons/og-img";
@@ -33,7 +34,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body style={{ background: "#f5f5f5" }}>{children}</body>
+      <body style={{ background: "#f5f5f5" }}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
