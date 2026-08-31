@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BrandLockIcon, HomeIcon, SendIcon, HelpCircleIcon } from "@/components/Send-Logic/icons";
+import { BrandMarkIcon, HomeIcon, SendIcon, HelpCircleIcon } from "@/components/Send-Logic/icons";
 import styles from "@/styles/navbar.module.css";
 import type { SVGProps } from "react";
 
@@ -39,7 +39,7 @@ export function Navbar() {
           className={styles.brand}
           aria-label="Zero Zephyr on GitHub"
         >
-          <BrandLockIcon className={styles["brand-icon"]} />
+          <BrandMarkIcon className={styles["brand-icon"]} />
           <span className={styles["brand-text"]}>
             ZERO <span>ZEPHYR</span>
           </span>

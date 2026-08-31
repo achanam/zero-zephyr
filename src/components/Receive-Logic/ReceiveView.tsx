@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BrandMarkIcon } from "@/components/Send-Logic/icons";
 import { PasswordPrompt } from "./PasswordPrompt";
 import { TextResult } from "./TextResult";
 import { FileResult } from "./FileResult";
@@ -109,12 +110,7 @@ export function ReceiveView({ slug }: { slug: string }) {
   return (
     <div className={`${styles.panel} ${styles["receive-card"]}`}>
       <div className={styles["receive-icon"]}>
-        {/* Lock glyph — same as password prompt, just larger via CSS */}
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="7.5" width="10" height="6.5" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-          <path d="M5.5 7.5V5.5C5.5 4.12 6.62 3 8 3v0c1.38 0 2.5 1.12 2.5 2.5v2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-          <circle cx="8" cy="10.75" r="1" fill="currentColor" />
-        </svg>
+        <BrandMarkIcon />
       </div>
 
       {phase.step === "loading" && <p className={styles["status-note"]}>Opening…</p>}
