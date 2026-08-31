@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <div className={`zz-home-scope ${styles.page}`}>
       <div className={styles.wrap}>
-        <p className={styles.tagline}>// nothing kept is nothing to lose</p>
+        <p className={styles.tagline}>Nothing Kept. Nothing to Lose.</p>
 
         <div className={styles["hero-atmosphere"]} aria-hidden="true">
           <div className={`${styles.orb} ${styles["orb-mint"]}`} />
