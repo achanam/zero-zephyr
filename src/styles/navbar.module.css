@@ -7,7 +7,7 @@
 }
 
 .inner {
-  max-width: 680px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 14px 20px;
   display: flex;
@@ -15,6 +15,18 @@
   justify-content: space-between;
   gap: 10px;
   font-family: var(--font-body);
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding: 16px 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    padding: 18px 48px;
+  }
 }
 
 .brand {
