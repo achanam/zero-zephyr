@@ -25,6 +25,20 @@
   position: relative;
 }
 
+@media (min-width: 768px) {
+  .wrap {
+    max-width: 640px;
+    padding: 40px 24px 72px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrap {
+    max-width: 720px;
+    padding: 48px 24px 80px;
+  }
+}
+
 /* header */
 .brand {
   display: flex;

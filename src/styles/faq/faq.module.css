@@ -24,6 +24,20 @@
   padding: 48px 20px 80px;
 }
 
+@media (min-width: 768px) {
+  .wrap {
+    max-width: 760px;
+    padding: 56px 24px 90px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrap {
+    max-width: 860px;
+    padding: 64px 24px 100px;
+  }
+}
+
 /* language switch */
 .lang-switch {
   position: fixed;
