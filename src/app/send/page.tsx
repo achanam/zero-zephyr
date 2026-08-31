@@ -24,7 +24,7 @@ export default function SendPage() {
   return (
     <div className={`zz-send-scope ${styles.page}`}>
       <div className={styles.wrap}>
-        <p className={styles.tagline}>// nothing kept is nothing to lose</p>
+        <p className={styles.tagline}>Nothing Kept. Nothing to Lose.</p>
 
         <SendForm />
 

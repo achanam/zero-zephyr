@@ -32,12 +32,18 @@ export function Navbar() {
   return (
     <nav className={styles.navbar} aria-label="Main navigation">
       <div className={styles.inner}>
-        <Link href="/" className={styles.brand} aria-label="Zero Zephyr home">
+        <a
+          href="https://github.com/achanam/zero-zephyr"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.brand}
+          aria-label="Zero Zephyr on GitHub"
+        >
           <BrandLockIcon className={styles["brand-icon"]} />
           <span className={styles["brand-text"]}>
             ZERO <span>ZEPHYR</span>
           </span>
-        </Link>
+        </a>
 
         <div className={styles.links}>
           {items.map((item) => {
