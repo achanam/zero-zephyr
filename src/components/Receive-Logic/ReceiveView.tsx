@@ -1,7 +1,12 @@
 "use client";
 
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { BrandMarkIcon } from "@/components/Send-Logic/icons";
+=======
+import { useEffect, useRef, useState } from "react";
+import { BrandMarkIcon, EyeIcon, FireIcon } from "@/components/Send-Logic/icons";
+>>>>>>> origin/dev/logics
 import { PasswordPrompt } from "./PasswordPrompt";
 import { TextResult } from "./TextResult";
 import { FileResult } from "./FileResult";
@@ -23,6 +28,7 @@ type TextMeta = { title: string; content: string };
 type FileMeta = { title: string; file_name: string; file_mime: string; file_size: number };
 
 type Phase =
+  | { step: "reveal" }
   | { step: "loading" }
   | { step: "fatal"; message: string }
   | { step: "password"; wrongAttempt: boolean }
@@ -31,62 +37,61 @@ type Phase =
   | { step: "file-result"; meta: FileMeta; password: string };
 
 export function ReceiveView({ slug }: { slug: string }) {
-  const [phase, setPhase] = useState<Phase>({ step: "loading" });
+  const [phase, setPhase] = useState<Phase>({ step: "reveal" });
   const [envelope, setEnvelope] = useState<Envelope | null>(null);
   const [preFetchedFile, setPreFetchedFile] = useState<PreFetchedFile>(null);
+  const unmountedRef = useRef(false);
 
   useEffect(() => {
-    let cancelled = false;
-
-    (async () => {
-      try {
-        const resp = await fetch(`/api/receive/${slug}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({}),
-        });
-        const contentType = resp.headers.get("Content-Type") || "";
-
-        if (resp.ok && !contentType.includes("application/json")) {
-          // Burned file — ciphertext bytes are embedded right in this response.
-          const env: Envelope = {
-            type: "file",
-            burned: true,
-            salt: resp.headers.get("X-Salt") || "",
-            iv_meta: resp.headers.get("X-Iv-Meta") || "",
-            meta_cipher: resp.headers.get("X-Meta-Cipher") || "",
-          };
-          const ivFile = resp.headers.get("X-Iv-File");
-          const saltFile = resp.headers.get("X-Salt-File");
-          const cipherBuf = await resp.arrayBuffer();
-          if (cancelled) return;
-          setEnvelope(env);
-          setPreFetchedFile({ ivFile, saltFile, cipherBuf });
-          setPhase({ step: "password", wrongAttempt: false });
-          return;
-        }
-
-        if (!resp.ok) {
-          const data = await resp.json().catch(() => ({}));
-          if (cancelled) return;
-          setPhase({ step: "fatal", message: data.error || "This message could not be accessed." });
-          return;
-        }
-
-        const env = (await resp.json()) as Envelope;
-        if (cancelled) return;
-        setEnvelope(env);
-        setPhase({ step: "password", wrongAttempt: false });
-      } catch (err) {
-        if (cancelled) return;
-        setPhase({ step: "fatal", message: `Failed to load: ${err instanceof Error ? err.message : "unknown error"}` });
-      }
-    })();
-
     return () => {
-      cancelled = true;
+      unmountedRef.current = true;
     };
-  }, [slug]);
+  }, []);
+
+  async function handleReveal() {
+    setPhase({ step: "loading" });
+    try {
+      const resp = await fetch(`/api/receive/${slug}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      const contentType = resp.headers.get("Content-Type") || "";
+
+      if (resp.ok && !contentType.includes("application/json")) {
+        const env: Envelope = {
+          type: "file",
+          burned: true,
+          salt: resp.headers.get("X-Salt") || "",
+          iv_meta: resp.headers.get("X-Iv-Meta") || "",
+          meta_cipher: resp.headers.get("X-Meta-Cipher") || "",
+        };
+        const ivFile = resp.headers.get("X-Iv-File");
+        const saltFile = resp.headers.get("X-Salt-File");
+        const cipherBuf = await resp.arrayBuffer();
+        if (unmountedRef.current) return;
+        setEnvelope(env);
+        setPreFetchedFile({ ivFile, saltFile, cipherBuf });
+        setPhase({ step: "password", wrongAttempt: false });
+        return;
+      }
+
+      if (!resp.ok) {
+        const data = await resp.json().catch(() => ({}));
+        if (unmountedRef.current) return;
+        setPhase({ step: "fatal", message: data.error || "This message could not be accessed." });
+        return;
+      }
+
+      const env = (await resp.json()) as Envelope;
+      if (unmountedRef.current) return;
+      setEnvelope(env);
+      setPhase({ step: "password", wrongAttempt: false });
+    } catch (err) {
+      if (unmountedRef.current) return;
+      setPhase({ step: "fatal", message: `Failed to load: ${err instanceof Error ? err.message : "unknown error"}` });
+    }
+  }
 
   async function handleUnlock(password: string) {
     if (!password || !envelope) return;
@@ -94,7 +99,6 @@ export function ReceiveView({ slug }: { slug: string }) {
 
     try {
       const meta = await decryptJson<TextMeta | FileMeta>(password, envelope.salt, envelope.iv_meta, envelope.meta_cipher);
-      // Brief pause matches vanilla's visual confirmation before switching view.
       await new Promise((r) => setTimeout(r, 180));
 
       if (envelope.type === "text") {
@@ -112,6 +116,23 @@ export function ReceiveView({ slug }: { slug: string }) {
       <div className={styles["receive-icon"]}>
         <BrandMarkIcon />
       </div>
+
+      {phase.step === "reveal" && (
+        <>
+          <p className={styles["status-note"]}>This message is encrypted end-to-end.</p>
+          <div className={styles["burn-note"]}>
+            <FireIcon /> Opening this uses up one view — only continue when you&apos;re ready to read it.
+          </div>
+          <button
+            type="button"
+            className={styles["btn-primary"]}
+            style={{ marginTop: 14 }}
+            onClick={handleReveal}
+          >
+            <EyeIcon /> Reveal message
+          </button>
+        </>
+      )}
 
       {phase.step === "loading" && <p className={styles["status-note"]}>Opening…</p>}
 
